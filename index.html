@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Assets — Spine Gallery</title>
-<link rel="stylesheet" href="https://unpkg.com/@esotericsoftware/spine-player@4.2.29/dist/spine-player.css" onerror="this.href='spine/spine-player.css'">
-<script src="https://unpkg.com/@esotericsoftware/spine-player@4.2.29/dist/iife/spine-player.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@esotericsoftware/spine-player@4.1.23/dist/spine-player.css" onerror="this.href='spine/spine-player.css'">
+<script src="https://unpkg.com/@esotericsoftware/spine-player@4.1.23/dist/iife/spine-player.js"></script>
 <script>if(typeof spine==="undefined"){document.write('<scr'+'ipt src="spine/spine-player.js"><\/scr'+'ipt>');}</script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>if(typeof JSZip==="undefined"){document.write('<scr'+'ipt src="lib/jszip.min.js"><\/scr'+'ipt>');}</script>
@@ -1191,7 +1191,11 @@ function captureAllFrames(fps, onProgress) {
           // Restore player state
           track.trackTime = savedTime;
           curPlayer.animationState.apply(skeleton);
-          skeleton.updateWorldTransform();
+          if (curPlayer.physics !== undefined) {
+            skeleton.updateWorldTransform(curPlayer.physics);
+          } else {
+            skeleton.updateWorldTransform();
+          }
           curPlayer.paused = savedPaused;
           resolve({ frames: frames, fps: fps, width: w, height: h });
           return;
@@ -1199,7 +1203,13 @@ function captureAllFrames(fps, onProgress) {
         var t = (i / fps) % duration;
         track.trackTime = t;
         curPlayer.animationState.apply(skeleton);
-        skeleton.updateWorldTransform();
+        // Spine 4.1: updateWorldTransform() takes no args.
+        // Spine 4.2: requires a physics arg; pass curPlayer.physics if available.
+        if (curPlayer.physics !== undefined) {
+          skeleton.updateWorldTransform(curPlayer.physics);
+        } else {
+          skeleton.updateWorldTransform();
+        }
         var cam = renderer.camera;
         if (cam) cam.update();
         renderer.begin();
@@ -1222,7 +1232,11 @@ function captureAllFrames(fps, onProgress) {
         try {
           track.trackTime = savedTime;
           curPlayer.animationState.apply(skeleton);
-          skeleton.updateWorldTransform();
+          if (curPlayer.physics !== undefined) {
+            skeleton.updateWorldTransform(curPlayer.physics);
+          } else {
+            skeleton.updateWorldTransform();
+          }
           curPlayer.paused = savedPaused;
         } catch (_) {}
         reject(e);
