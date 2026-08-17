@@ -216,7 +216,6 @@ h1 .ct { font-size:.8rem; font-weight:400; color:#888; background:#1e1e28; paddi
           <label for="atlas-select">Atlas:</label>
           <select id="atlas-select"></select>
           <button class="btn btn-p" onclick="applyManualCombo()">Apply</button>
-          <button class="btn btn-s" onclick="saveCurrentAsThumb()">Save as Thumb</button>
           <span id="combo-status" class="combo-status"></span>
         </div>
       </div>
@@ -1158,52 +1157,79 @@ function savePlayerImage() {
 }
 
 // --- Export: Frame capture core ---
-function captureAllFrames(fps) {
-  if (!curPlayer || !curPlayer.skeleton || !curPlayer.sceneRenderer) return null;
-  var skeleton = curPlayer.skeleton;
-  var renderer = curPlayer.sceneRenderer;
-  var gl = renderer.context.gl;
-  var canvas = renderer.canvas;
-  var w = canvas.width, h = canvas.height;
-  var tracks = curPlayer.animationState.tracks;
-  var track = null;
-  for (var i = 0; i < tracks.length; i++) { if (tracks[i]) { track = tracks[i]; break; } }
-  if (!track) return null;
-  var anim = track.animation;
-  var duration = anim.duration;
-  if (duration <= 0) return null;
-  var totalFrames = Math.max(1, Math.ceil(duration * fps));
-  var savedTime = track.trackTime;
-  var savedPaused = curPlayer.paused;
-  curPlayer.paused = true;
-  var frames = [];
-  var pixels = new Uint8Array(w * h * 4);
-
-  for (var i = 0; i < totalFrames; i++) {
-    var t = (i / fps) % duration;
-    track.trackTime = t;
-    curPlayer.animationState.apply(skeleton);
-    skeleton.updateWorldTransform();
-    var cam = renderer.camera;
-    if (cam) cam.update();
-    renderer.begin();
-    renderer.drawSkeleton(skeleton, true);
-    renderer.end();
-    gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
-    var imgData = new ImageData(w, h);
-    for (var y = 0; y < h; y++) {
-      var srcOff = (h - 1 - y) * w * 4;
-      var dstOff = y * w * 4;
-      for (var x = 0; x < w * 4; x++) imgData.data[dstOff + x] = pixels[srcOff + x];
+function captureAllFrames(fps, onProgress) {
+  // Returns a Promise that resolves to {frames, fps, width, height}.
+  // Yields to the event loop between frames so the UI can repaint and the
+  // progress bar actually updates.
+  return new Promise(function(resolve, reject) {
+    if (!curPlayer || !curPlayer.skeleton || !curPlayer.sceneRenderer) {
+      reject(new Error('Spine player not ready.')); return;
     }
-    frames.push(imgData);
-  }
+    var skeleton = curPlayer.skeleton;
+    var renderer = curPlayer.sceneRenderer;
+    var gl = renderer.context.gl;
+    var canvas = renderer.canvas;
+    var w = canvas.width, h = canvas.height;
+    var tracks = curPlayer.animationState.tracks;
+    var track = null;
+    for (var i = 0; i < tracks.length; i++) { if (tracks[i]) { track = tracks[i]; break; } }
+    if (!track) { reject(new Error('No animation track is playing.')); return; }
+    var anim = track.animation;
+    var duration = anim.duration;
+    if (duration <= 0) { reject(new Error('Animation has zero duration.')); return; }
+    var totalFrames = Math.max(1, Math.ceil(duration * fps));
+    var savedTime = track.trackTime;
+    var savedPaused = curPlayer.paused;
+    curPlayer.paused = true;
+    var frames = [];
+    var pixels = new Uint8Array(w * h * 4);
+    var i = 0;
 
-  track.trackTime = savedTime;
-  curPlayer.animationState.apply(skeleton);
-  skeleton.updateWorldTransform();
-  curPlayer.paused = savedPaused;
-  return { frames: frames, fps: fps, width: w, height: h };
+    function captureNext() {
+      try {
+        if (i >= totalFrames) {
+          // Restore player state
+          track.trackTime = savedTime;
+          curPlayer.animationState.apply(skeleton);
+          skeleton.updateWorldTransform();
+          curPlayer.paused = savedPaused;
+          resolve({ frames: frames, fps: fps, width: w, height: h });
+          return;
+        }
+        var t = (i / fps) % duration;
+        track.trackTime = t;
+        curPlayer.animationState.apply(skeleton);
+        skeleton.updateWorldTransform();
+        var cam = renderer.camera;
+        if (cam) cam.update();
+        renderer.begin();
+        renderer.drawSkeleton(skeleton, true);
+        renderer.end();
+        gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+        var imgData = new ImageData(w, h);
+        for (var y = 0; y < h; y++) {
+          var srcOff = (h - 1 - y) * w * 4;
+          var dstOff = y * w * 4;
+          for (var x = 0; x < w * 4; x++) imgData.data[dstOff + x] = pixels[srcOff + x];
+        }
+        frames.push(imgData);
+        if (onProgress) onProgress(i + 1, totalFrames);
+        i++;
+        // Yield to the event loop so the progress bar can repaint
+        setTimeout(captureNext, 0);
+      } catch (e) {
+        // Restore on error too, so the player isn't left in a paused state
+        try {
+          track.trackTime = savedTime;
+          curPlayer.animationState.apply(skeleton);
+          skeleton.updateWorldTransform();
+          curPlayer.paused = savedPaused;
+        } catch (_) {}
+        reject(e);
+      }
+    }
+    captureNext();
+  });
 }
 
 function showExportProgress(current, total) {
@@ -1224,15 +1250,24 @@ function hideExportProgress() {
 
 // --- Export: PNG Sequence ZIP ---
 async function exportPNGSequence() {
-  if (typeof JSZip === 'undefined') { alert('JSZip not loaded. Re-run build_gallery.py.'); return; }
+  if (typeof JSZip === 'undefined') { alert('JSZip not loaded. Check your internet connection (loaded from CDN).'); return; }
   if (exporting) return;
   exporting = true;
   var fps = 24;
   showExportProgress(0, 1);
   updateExportUI('Capturing frames...');
   await new Promise(function(r) { setTimeout(r, 50); });
-  var result = captureAllFrames(fps);
-  if (!result) { updateExportUI('No animation to export.'); hideExportProgress(); exporting = false; return; }
+  var result;
+  try {
+    result = await captureAllFrames(fps, function(cur, total) {
+      showExportProgress(cur, total);
+    });
+  } catch (e) {
+    updateExportUI('Error: ' + e.message);
+    hideExportProgress();
+    exporting = false;
+    return;
+  }
   updateExportUI('Creating ZIP...');
   var zip = new JSZip();
   var charName = CHARS[curIdx] ? CHARS[curIdx].name : 'spine';
@@ -1244,6 +1279,8 @@ async function exportPNGSequence() {
     var num = String(i).padStart(4, '0');
     zip.file(charName + '_frame_' + num + '.png', blob);
     showExportProgress(i + 1, result.frames.length);
+    // Yield so UI updates
+    if (i % 5 === 0) await new Promise(function(r) { setTimeout(r, 0); });
   }
   updateExportUI('Compressing...');
   var content = await zip.generateAsync({ type: 'blob' });
@@ -1258,15 +1295,24 @@ async function exportPNGSequence() {
 
 // --- Export: Animated GIF ---
 async function exportGIF() {
-  if (typeof GIF === 'undefined') { alert('gif.js not loaded. Re-run build_gallery.py.'); return; }
+  if (typeof GIF === 'undefined') { alert('gif.js not loaded. Check your internet connection (loaded from CDN).'); return; }
   if (exporting) return;
   exporting = true;
   var fps = 15;
   showExportProgress(0, 1);
   updateExportUI('Capturing frames...');
   await new Promise(function(r) { setTimeout(r, 50); });
-  var result = captureAllFrames(fps);
-  if (!result) { updateExportUI('No animation to export.'); hideExportProgress(); exporting = false; return; }
+  var result;
+  try {
+    result = await captureAllFrames(fps, function(cur, total) {
+      showExportProgress(cur, total);
+    });
+  } catch (e) {
+    updateExportUI('Error: ' + e.message);
+    hideExportProgress();
+    exporting = false;
+    return;
+  }
   updateExportUI('Encoding GIF...');
   // gif.worker.js -- try CDN first (works on github.io), fall back to local lib/
   var workerScript = 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js';
@@ -1281,6 +1327,9 @@ async function exportGIF() {
     gif.addFrame(c2, { delay: Math.round(1000 / fps), copy: true });
     showExportProgress(i + 1, result.frames.length);
   }
+  gif.on('progress', function(p) {
+    updateExportUI('Encoding GIF... ' + Math.round(p * 100) + '%');
+  });
   gif.on('finished', function(blob) {
     var a = document.createElement('a');
     a.download = (CHARS[curIdx] ? CHARS[curIdx].name : 'spine') + '.gif';
