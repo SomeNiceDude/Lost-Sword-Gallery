@@ -6,9 +6,11 @@
 <title>Assets — Spine Gallery</title>
 <link rel="stylesheet" href="https://unpkg.com/@esotericsoftware/spine-player@4.2.29/dist/spine-player.css" onerror="this.href='spine/spine-player.css'">
 <script src="https://unpkg.com/@esotericsoftware/spine-player@4.2.29/dist/iife/spine-player.js"></script>
-<script>if(typeof spine==="undefined"){var s=document.createElement("script");s.src="spine/spine-player.js";document.head.appendChild(s);}</script>
-<script src="lib/jszip.min.js"></script>
-<script src="lib/gif.js"></script>
+<script>if(typeof spine==="undefined"){document.write('<scr'+'ipt src="spine/spine-player.js"><\/scr'+'ipt>');}</script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>if(typeof JSZip==="undefined"){document.write('<scr'+'ipt src="lib/jszip.min.js"><\/scr'+'ipt>');}</script>
+<script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js"></script>
+<script>if(typeof GIF==="undefined"){document.write('<scr'+'ipt src="lib/gif.js"><\/scr'+'ipt>');}</script>
 <style>
 * { box-sizing:border-box; margin:0; padding:0; }
 body { font-family:'Segoe UI',system-ui,sans-serif; background:#0f0f13; color:#e0e0e0; min-height:100vh; }
@@ -1266,9 +1268,11 @@ async function exportGIF() {
   var result = captureAllFrames(fps);
   if (!result) { updateExportUI('No animation to export.'); hideExportProgress(); exporting = false; return; }
   updateExportUI('Encoding GIF...');
+  // gif.worker.js -- try CDN first (works on github.io), fall back to local lib/
+  var workerScript = 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js';
   var gif = new GIF({
     workers: 2, quality: 10, width: result.width, height: result.height,
-    workerScript: 'lib/gif.worker.js'
+    workerScript: workerScript
   });
   for (var i = 0; i < result.frames.length; i++) {
     var c2 = document.createElement('canvas');
