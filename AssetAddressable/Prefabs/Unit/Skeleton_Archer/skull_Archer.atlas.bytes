@@ -1,0 +1,248 @@
+skull_Archer.png
+	size: 244, 1344
+	filter: Linear, Linear
+	pma: true
+	scale: 0.45
+ArcherSkin1_1
+	bounds: 186, 456, 26, 47
+	rotate: 270
+ArcherSkin1_10
+	bounds: 219, 332, 19, 39
+ArcherSkin1_11
+	bounds: 188, 5, 14, 14
+ArcherSkin1_2
+	bounds: 168, 17, 42, 32
+ArcherSkin1_3
+	bounds: 2, 141, 229, 73
+ArcherSkin1_4
+	bounds: 2, 299, 115, 193
+	rotate: 90
+ArcherSkin1_5
+	bounds: 88, 719, 266, 118
+	rotate: 90
+ArcherSkin1_6
+	bounds: 2, 67, 57, 74
+	rotate: 270
+ArcherSkin1_7
+	bounds: 105, 484, 54, 112
+	rotate: 90
+ArcherSkin1_8
+	bounds: 208, 1072, 30, 32
+	rotate: 180
+ArcherSkin1_9
+	bounds: 223, 416, 15, 37
+ArcherSkin2_1
+	bounds: 89, 401, 83, 50
+ArcherSkin2_10
+	bounds: 2, 1003, 121, 149
+	rotate: 270
+ArcherSkin2_11
+	bounds: 24, 911, 102, 140
+	rotate: 270
+ArcherSkin2_2
+	bounds: 219, 565, 14, 38
+ArcherSkin2_3
+	bounds: 2, 1189, 31, 18
+	rotate: 90
+ArcherSkin2_4
+	bounds: 109, 41, 59, 63
+	rotate: 90
+ArcherSkin2_5
+	bounds: 2, 44, 82, 20
+ArcherSkin2_6
+	bounds: 221, 145, 31, 18
+	rotate: 90
+ArcherSkin2_7
+	bounds: 134, 1015, 107, 85
+	rotate: 90
+ArcherSkin2_8
+	bounds: 14, 847, 73, 144
+	rotate: 90
+ArcherSkin3_1
+	bounds: 2, 569, 76, 112
+	rotate: 270
+ArcherSkin3_10
+	bounds: 162, 260, 41, 61
+	rotate: 90
+ArcherSkin3_11
+	bounds: 50, 302, 64, 46
+	offsets: 12, 0, 85, 46
+ArcherSkin3_14
+	bounds: 204, 1308, 34, 31
+	rotate: 270
+ArcherSkin3_15
+	bounds: 133, 86, 80, 58
+ArcherSkin3_17
+	bounds: 93, 620, 81, 71
+ArcherSkin3_19
+	bounds: 2, 1113, 160, 229
+	offsets: 0, 0, 160, 231
+ArcherSkin3_2
+	bounds: 207, 825, 55, 25
+	rotate: 90
+ArcherSkin3_20
+	bounds: 211, 490, 29, 27
+	rotate: 90
+ArcherSkin3_3
+	bounds: 167, 77, 38, 50
+	rotate: 90
+ArcherSkin3_4
+	bounds: 35, 450, 64, 73
+	rotate: 270
+ArcherSkin3_5
+	bounds: 164, 511, 64, 60
+	offsets: 0, 0, 64, 61
+ArcherSkin3_6
+	bounds: 217, 869, 21, 45
+ArcherSkin3_7
+	bounds: 34, 262, 44, 57
+	rotate: 270
+ArcherSkin3_8
+	bounds: 211, 1124, 50, 27
+	rotate: 90
+ArcherSkin3_9
+	bounds: 212, 88, 27, 50
+	rotate: 180
+ArcherSkin4_1
+	bounds: 44, 324, 185, 76
+ArcherSkin4_10
+	bounds: 35, 2, 43, 29
+	rotate: 90
+ArcherSkin4_11
+	bounds: 72, 1282, 59, 59
+ArcherSkin4_12
+	bounds: 175, 215, 42, 56
+	offsets: 0, 0, 42, 57
+	rotate: 90
+ArcherSkin4_14
+	bounds: 4, 654, 93, 70
+	offsets: 0, 3, 93, 73
+	rotate: 180
+ArcherSkin4_15
+	bounds: 16, 495, 85, 77
+ArcherSkin4_2
+	bounds: 93, 271, 67, 47
+	rotate: 180
+ArcherSkin4_20
+	bounds: 135, 1233, 109, 72
+	rotate: 90
+ArcherSkin4_21
+	bounds: 152, 575, 63, 78
+	rotate: 180
+ArcherSkin4_2_1
+	bounds: 84, 534, 79, 59
+ArcherSkin4_3
+	bounds: 180, 156, 38, 69
+ArcherSkin4_3_1
+	bounds: 101, 449, 51, 75
+	rotate: 270
+ArcherSkin4_4
+	bounds: 32, 204, 60, 45
+	rotate: 180
+ArcherSkin4_5
+	bounds: 195, 766, 35, 57
+ArcherSkin4_6
+	bounds: 157, 1211, 18, 21
+ArcherSkin4_7
+	bounds: 189, 294, 28, 49
+	rotate: 270
+ArcherSkin4_8
+	bounds: 36, 134, 45, 59
+	rotate: 270
+ArcherSkin4_9
+	bounds: 214, 1197, 29, 25
+	offsets: 0, 1, 29, 26
+	rotate: 90
+armAD
+	bounds: 63, 78, 34, 65
+	rotate: 270
+armAU
+	bounds: 2, 225, 51, 84
+armBD
+	bounds: 2, 103, 47, 60
+	rotate: 270
+armBU
+	bounds: 195, 1227, 38, 78
+bodyA
+	bounds: 2, 713, 84, 74
+bodyA_Bk
+	bounds: 147, 681, 84, 74
+	rotate: 270
+bodyA_Bk1
+	bounds: 203, 606, 78, 29
+	rotate: 270
+bodyB1
+	bounds: 2, 158, 62, 33
+bodyB2
+	bounds: 204, 7, 32, 33
+boneShoulderA
+	bounds: 33, 1327, 21, 15
+boneShoulderB
+	bounds: 126, 1323, 19, 19
+die_1
+	bounds: 147, 1332, 11, 10
+die_2
+	bounds: 96, 9, 18, 20
+die_3
+	bounds: 2, 1316, 16, 26
+eff1111
+	bounds: 8, 401, 76, 59
+	offsets: 4, 0, 80, 59
+	rotate: 180
+eff_soil1
+	bounds: 2, 1116, 33, 12
+eff_soil2
+	bounds: 53, 1126, 34, 11
+eff_soil3
+	bounds: 64, 109, 77, 22
+eff_soilfx1
+	bounds: 195, 350, 66, 32
+	offsets: 0, 0, 68, 32
+	rotate: 90
+eff_soilfx2
+	bounds: 164, 1120, 108, 54
+	rotate: 90
+footA
+	bounds: 120, 7, 32, 33
+	rotate: 270
+footB
+	bounds: 206, 1016, 55, 26
+	rotate: 90
+handA
+	bounds: 2, 13, 31, 30
+handA_1
+	bounds: 104, 227, 49, 53
+	rotate: 90
+handB
+	bounds: 205, 724, 33, 30
+	rotate: 90
+head
+	bounds: 2, 1128, 58, 60
+	rotate: 90
+legAD
+	bounds: 2, 299, 51, 89
+legAU
+	bounds: 101, 204, 33, 89
+	rotate: 270
+legBD
+	bounds: 200, 916, 28, 90
+	rotate: 180
+legBU
+	bounds: 162, 371, 59, 87
+mouth
+	bounds: 211, 179, 34, 27
+	rotate: 90
+neck
+	bounds: 141, 35, 40, 43
+	rotate: 270
+pelvis1
+	bounds: 62, 13, 45, 36
+	rotate: 180
+pelvisB
+	bounds: 188, 41, 44, 42
+	offsets: 0, 0, 44, 44
+shadow
+	bounds: 22, 788, 139, 57
+waist
+	bounds: 97, 132, 32, 64
+	rotate: 270

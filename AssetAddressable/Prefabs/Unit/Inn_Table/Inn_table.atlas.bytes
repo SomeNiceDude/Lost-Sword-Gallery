@@ -1,0 +1,11 @@
+Inn_table.png
+size:1080,528
+filter:Linear,Linear
+pma:true
+Table
+bounds:2,2,996,523
+offsets:1,1,998,525
+shadow
+bounds:1000,357,168,77
+offsets:4,4,176,85
+rotate:90

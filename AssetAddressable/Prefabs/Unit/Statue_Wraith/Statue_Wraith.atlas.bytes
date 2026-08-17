@@ -1,0 +1,11 @@
+Statue_Wraith.png
+size:864,612
+filter:Linear,Linear
+pma:true
+scale:0.8
+GBL
+bounds:2,2,607,693
+rotate:90
+Sm_1
+bounds:697,373,165,236
+offsets:3,3,174,243

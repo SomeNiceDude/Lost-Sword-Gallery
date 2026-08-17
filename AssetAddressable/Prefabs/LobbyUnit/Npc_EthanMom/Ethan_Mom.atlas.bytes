@@ -1,0 +1,17 @@
+Ethan_Mom.png
+size:536,1544
+filter:Linear,Linear
+pma:true
+scale:0.4
+Body
+bounds:2,392,532,1149
+offsets:0,0,562,1149
+Face
+bounds:2,138,259,292
+offsets:0,0,259,296
+rotate:90
+Hair_B
+bounds:2,2,134,416
+rotate:90
+Hair_F
+bounds:296,151,236,253

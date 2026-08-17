@@ -1,0 +1,400 @@
+Watcher.png
+size:3972,1516
+filter:Linear,Linear
+pma:true
+Attack_Leg_1
+bounds:216,456,212,1058
+Attack_Leg_2
+bounds:2,336,212,1178
+BL_1_00007
+bounds:3726,263,151,55
+offsets:89,207,334,334
+BL_1_00008
+bounds:3541,199,168,67
+offsets:80,195,334,334
+BL_1_00009
+bounds:3305,463,174,80
+offsets:79,180,334,334
+rotate:90
+BL_1_00010
+bounds:832,635,182,106
+offsets:78,154,334,334
+BL_1_00011
+bounds:3577,662,195,122
+offsets:67,136,334,334
+BL_1_00012
+bounds:3090,336,203,140
+offsets:60,117,334,334
+BL_1_00013
+bounds:2883,370,205,148
+offsets:60,109,334,334
+BL_1_00014
+bounds:2584,10,207,152
+offsets:60,103,334,334
+BL_1_00015
+bounds:2371,5,211,159
+offsets:58,96,334,334
+BL_1_00016
+bounds:2219,179,209,166
+offsets:60,89,334,334
+BL_1_00017
+bounds:2412,352,201,171
+offsets:66,84,334,334
+BL_1_00018
+bounds:2214,347,196,180
+offsets:69,75,334,334
+BL_1_00019
+bounds:2430,166,191,184
+offsets:70,71,334,334
+BL_1_00020
+bounds:1223,2,188,186
+offsets:70,69,334,334
+rotate:90
+BL_1_00021
+bounds:2623,164,187,186
+offsets:70,69,334,334
+BL_1_00022
+bounds:1411,2,188,185
+offsets:69,69,334,334
+rotate:90
+BL_1_00023
+bounds:3118,478,185,185
+offsets:71,69,334,334
+BL_1_00024
+bounds:3390,695,185,181
+offsets:71,72,334,334
+BL_1_00025
+bounds:1223,192,186,179
+offsets:71,71,334,334
+BL_1_00026
+bounds:1598,2,183,174
+offsets:72,75,334,334
+BL_1_00027
+bounds:2615,352,184,171
+offsets:72,75,334,334
+BL_1_00028
+bounds:3577,499,184,161
+offsets:72,82,334,334
+BL_1_00029
+bounds:1411,192,182,156
+offsets:74,82,334,334
+rotate:90
+BL_1_00030
+bounds:2889,214,183,154
+offsets:73,81,334,334
+BL_1_00031
+bounds:2920,30,182,152
+offsets:74,81,334,334
+rotate:90
+BL_1_00032
+bounds:3074,58,181,152
+offsets:75,81,334,334
+BL_1_00033
+bounds:1957,2,174,135
+offsets:81,95,334,334
+rotate:90
+BL_1_00034
+bounds:289,322,12,61
+offsets:173,103,334,334
+rotate:90
+BL_1_00035
+bounds:3630,1123,11,60
+offsets:174,102,334,334
+rotate:90
+BL_1_00036
+bounds:1957,183,4,7
+offsets:176,102,334,334
+Bd_Back
+bounds:289,10,317,306
+D_F_body
+bounds:878,1117,397,442
+rotate:90
+D_F_body2
+bounds:430,1085,446,429
+D_F_eye 01
+bounds:608,5,311,315
+rotate:90
+D_F_eye 02
+bounds:3273,4,63,81
+rotate:90
+D_F_eye HL 02
+bounds:2889,172,28,40
+D_F_tentacle L a01
+bounds:3774,631,176,153
+D_F_tentacle L a02
+bounds:3295,332,87,129
+D_F_tentacle L a03
+bounds:3713,1114,241,400
+D_F_tentacle L a034
+bounds:430,635,400,448
+D_F_tentacle L b01
+bounds:1054,682,321,112
+D_F_tentacle L b02
+bounds:925,3,313,296
+rotate:90
+D_F_tentacle R d01
+bounds:3779,356,154,141
+D_F_tentacle R f01
+bounds:2883,520,233,132
+offsets:87,0,320,132
+D_F_tentacle R f02
+bounds:2094,2,128,174
+D_eye 01
+bounds:2571,1135,379,379
+D_eye 02
+bounds:2920,2,26,43
+rotate:90
+D_eye 03
+bounds:3260,200,116,130
+D_eye HL 01
+bounds:1687,821,336,283
+D_eye HL 03
+bounds:878,1085,30,35
+rotate:90
+D_eye bloodshot
+bounds:3333,1136,378,378
+D_eye lineart
+bounds:2187,1133,382,381
+D_eye sh 01
+bounds:2952,1135,379,379
+Dead_Body
+bounds:1766,1106,408,419
+rotate:90
+DieSp_00002
+bounds:3090,486,26,32
+offsets:157,152,334,334
+DieSp_00003
+bounds:3563,268,161,150
+offsets:89,96,334,334
+DieSp_00004
+bounds:3390,514,185,179
+offsets:78,85,334,334
+DieSp_00005
+bounds:2883,654,208,218
+offsets:63,62,334,334
+DieSp_00006
+bounds:1714,399,247,240
+offsets:37,48,334,334
+DieSp_00007
+bounds:3630,863,253,249
+offsets:34,43,334,334
+DieSp_00008
+bounds:3110,872,261,253
+offsets:30,41,334,334
+rotate:90
+DieSp_00009
+bounds:3365,878,263,256
+offsets:30,39,334,334
+DieSp_00010
+bounds:2845,874,263,259
+offsets:31,38,334,334
+DieSp_00011
+bounds:1369,376,264,260
+offsets:30,37,334,334
+DieSp_00012
+bounds:2238,608,264,260
+offsets:30,37,334,334
+DieSp_00013
+bounds:2238,870,264,261
+offsets:30,37,334,334
+DieSp_00014
+bounds:2580,871,263,262
+offsets:30,36,334,334
+Die_Splash_00001
+bounds:3508,9,111,111
+offsets:118,99,334,334
+Die_Splash_00002
+bounds:1783,5,185,172
+offsets:75,81,334,334
+rotate:90
+Die_Splash_00003
+bounds:3093,665,212,205
+offsets:63,68,334,334
+Die_Splash_00004
+bounds:1963,327,238,249
+offsets:45,42,334,334
+rotate:90
+Eff_Breath
+bounds:2,9,285,325
+Eff_Rd_Ptc2
+bounds:1054,796,320,319
+F_arm_L t 01
+bounds:3763,499,130,154
+rotate:90
+F_arm_L t 02
+bounds:3830,57,56,94
+F_body
+bounds:1322,1117,397,442
+rotate:90
+F_eye 01
+bounds:818,318,311,315
+F_eye 012
+bounds:1376,802,309,313
+F_eye 02
+bounds:3257,69,102,129
+F_eye HL 02
+bounds:2013,567,223,212
+F_eyelid 01
+bounds:2025,781,323,211
+rotate:90
+F_eyelid 02
+bounds:1377,638,322,162
+offsets:0,7,322,169
+F_leg_L t 01
+bounds:3888,108,49,63
+offsets:0,0,51,67
+F_leg_L t 02
+bounds:216,336,118,157
+rotate:90
+F_leg_L t 03
+bounds:3675,29,63,110
+F_leg_R t 01
+bounds:2793,2,125,155
+F_leg_R t 02
+bounds:3740,42,88,109
+offsets:0,0,88,115
+F_leg_R t 03
+bounds:3378,145,60,150
+offsets:3,0,63,150
+rotate:90
+F_mouth C H01
+bounds:3356,3,56,70
+rotate:90
+F_mouth C H02
+bounds:3885,830,104,85
+rotate:90
+F_mouth C H03
+bounds:3672,141,56,37
+rotate:90
+F_mouth C H04
+bounds:3937,188,68,33
+rotate:90
+F_mouth C H05
+bounds:1131,320,84,70
+F_mouth C H06
+bounds:1963,578,61,43
+rotate:90
+F_mouth C L01
+bounds:1016,635,45,39
+rotate:90
+F_mouth C L02
+bounds:2713,526,86,71
+F_mouth C L03
+bounds:3919,556,73,39
+rotate:90
+F_mouth C L04
+bounds:3879,258,73,60
+F_mouth C L05
+bounds:375,373,81,53
+rotate:90
+F_mouth C L06
+bounds:3864,173,71,83
+F_mouth O 01
+bounds:832,743,340,220
+rotate:90
+F_mouth O 02
+bounds:1701,641,310,178
+F_tentacle L b02
+bounds:430,318,386,315
+F_tentacle R c02
+bounds:1131,392,236,288
+F_tentacle R d02
+bounds:1714,192,247,205
+F_tentacle R e
+bounds:1963,178,254,147
+F_tentacle R f02
+bounds:2504,604,242,218
+rotate:90
+Lq1_00030
+bounds:3307,639,81,231
+offsets:138,69,334,334
+Lq1_00031
+bounds:2801,355,80,239
+offsets:138,61,334,334
+Lq1_00032
+bounds:2724,599,79,247
+offsets:138,53,334,334
+Lq1_00033
+bounds:2238,529,77,254
+offsets:139,45,334,334
+rotate:90
+Lq1_00034
+bounds:1635,373,77,263
+offsets:139,36,334,334
+Lq1_00035
+bounds:2805,596,76,273
+offsets:140,26,334,334
+Lq1_00036
+bounds:3577,786,75,281
+offsets:141,18,334,334
+rotate:90
+Lq1_00037
+bounds:2504,848,74,283
+offsets:141,16,334,334
+Lq1_00038
+bounds:3387,437,75,186
+offsets:141,113,334,334
+rotate:90
+Lq1_00039
+bounds:2812,159,75,194
+offsets:142,105,334,334
+Lq1_00040
+bounds:3575,420,77,202
+offsets:142,96,334,334
+rotate:90
+Lq1_00041
+bounds:2494,525,77,217
+offsets:142,80,334,334
+rotate:90
+Lq1_00042
+bounds:3074,21,35,197
+offsets:150,64,334,334
+rotate:90
+Lq1_00043
+bounds:3726,320,34,207
+offsets:151,49,334,334
+rotate:90
+Lq1_00044
+bounds:2580,848,21,215
+offsets:151,36,334,334
+rotate:90
+Sp1_00002
+bounds:3621,7,113,52
+offsets:34,145,334,334
+rotate:90
+Sp1_00003
+bounds:3378,207,161,80
+offsets:73,127,334,334
+Sp1_00004
+bounds:3074,212,184,122
+offsets:103,109,334,334
+Sp1_00005
+bounds:1569,203,168,138
+offsets:127,103,334,334
+rotate:90
+Sp1_00006
+bounds:2224,2,175,145
+offsets:138,97,334,334
+rotate:90
+Sp1_00007
+bounds:3384,289,177,146
+offsets:146,96,334,334
+Sp1_00008
+bounds:3711,153,151,108
+offsets:175,116,334,334
+Sp1_00009
+bounds:3361,61,145,82
+offsets:183,113,334,334
+Sp1_00010
+bounds:3530,122,140,75
+offsets:188,113,334,334
+Sp1_00011
+bounds:3428,5,61,54
+offsets:198,111,334,334
+Sp1_00012
+bounds:375,336,35,50
+offsets:221,111,334,334
+rotate:90
+shadow
+bounds:3885,936,176,85
+rotate:90

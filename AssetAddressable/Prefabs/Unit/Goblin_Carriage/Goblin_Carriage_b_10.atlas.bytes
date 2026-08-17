@@ -1,0 +1,8 @@
+Goblin_Carriage_b_10.png
+size:128,128
+filter:Linear,Linear
+pma:true
+scale:0.4
+carriage/handle_back
+bounds:2,2,105,112
+offsets:0,0,165,112

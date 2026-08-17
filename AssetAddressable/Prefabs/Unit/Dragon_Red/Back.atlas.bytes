@@ -1,0 +1,12 @@
+Back.png
+size:512,256
+filter:Linear,Linear
+pma:true
+scale:0.7
+Eff_Bot_2
+bounds:210,12,197,90
+offsets:2,0,200,90
+rotate:90
+Eff_Rd_Ptc2
+bounds:2,2,206,207
+offsets:9,8,224,223

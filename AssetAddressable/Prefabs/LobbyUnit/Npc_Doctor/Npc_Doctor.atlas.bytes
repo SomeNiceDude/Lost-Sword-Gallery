@@ -1,0 +1,13 @@
+Npc_Doctor.png
+size:736,1464
+filter:Linear,Linear
+pma:true
+scale:0.5
+Body
+bounds:2,199,729,1261
+Hair_1
+bounds:275,107,187,91
+offsets:0,1,187,92
+Head
+bounds:2,2,271,316
+offsets:0,1,276,317
