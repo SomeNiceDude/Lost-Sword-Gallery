@@ -72,7 +72,7 @@ h1 .ct { font-size:.8rem; font-weight:400; color:#888; background:#1e1e28; paddi
 .mx:hover { background:#6c5ce7; color:#fff; }
 .mb { padding:0 18px 18px; overflow:auto; flex:1; }
 #player-wrap { width:100%; background:#111118; border-radius:10px; overflow:hidden; position:relative; margin-bottom:12px; }
-#player-container { width:100%; height:500px; position:relative; }
+#player-container { width:100%; height:640px; position:relative; }
 #player-error { display:none; text-align:center; padding:30px; color:#e17055; font-size:.9rem; line-height:1.6; }
 .zoom-hint { position:absolute; bottom:8px; right:8px; font-size:.65rem; color:#555; pointer-events:none; z-index:10; }
 #skin-select-wrap { display:none; align-items:center; gap:8px; margin-bottom:8px; }
@@ -463,6 +463,41 @@ function destroyPlayer() {
   comboProbeResults = null;
 }
 
+// --- High-quality render: boost WebGL buffer resolution ---
+// SpinePlayer sizes the canvas drawing buffer to clientWidth * devicePixelRatio.
+// In a small modal, that's ~800x500 = 400k pixels -- not enough when zoomed in.
+// This monkey-patches sceneRenderer.resize to allocate RENDER_SCALE x more
+// pixels without changing the camera viewport (so model framing is preserved).
+// Net effect: supersampled rendering -- crisp visuals even when zoomed in.
+var RENDER_SCALE = 2; // 2x in each dim = 4x pixels. Set to 1 to disable.
+function setupHighQualityRender(player) {
+  if (!player || !player.sceneRenderer) return;
+  var sr = player.sceneRenderer;
+  if (sr._hqPatched) return; // only patch once per renderer
+  sr._hqPatched = true;
+  var origResize = sr.resize.bind(sr);
+  sr.resize = function(mode) {
+    var canvas = sr.canvas;
+    var dpr = window.devicePixelRatio || 1;
+    // Drawing buffer at RENDER_SCALE x the CSS pixel size
+    var w = Math.round(canvas.clientWidth * dpr * RENDER_SCALE);
+    var h = Math.round(canvas.clientHeight * dpr * RENDER_SCALE);
+    if (canvas.width != w || canvas.height != h) {
+      canvas.width = w;
+      canvas.height = h;
+    }
+    sr.context.gl.viewport(0, 0, canvas.width, canvas.height);
+    // Camera viewport uses ORIGINAL (un-scaled) dimensions so the visible
+    // world area stays the same -- only the pixel density increases.
+    var camW = Math.round(canvas.clientWidth * dpr);
+    var camH = Math.round(canvas.clientHeight * dpr);
+    // SpinePlayer always calls resize(ResizeMode.Expand). The Expand branch
+    // is: camera.setViewport(w, h). Use camW/camH instead so framing is preserved.
+    sr.camera.setViewport(camW, camH);
+    sr.camera.update();
+  };
+}
+
 // --- Zoom & Pan via CSS transforms (safe: no camera/control interference) ---
 function setupZoomPan(player) {
   cleanupZoomPan();
@@ -781,6 +816,7 @@ function loadSpineModel(c) {
         }
       } catch(qErr) { /* quality check failed -- accept this combo */ }
       autoSelectBestSkin(p);
+      setupHighQualityRender(p);
       setupZoomPan(p);
       lastSuccessfulCombo = combo;
       selectCurrentComboInDropdowns(combo.skel, combo.atlas);
@@ -843,6 +879,7 @@ function applyManualCombo() {
   cfg.preserveDrawingBuffer = true;
   cfg.success = function(p) {
     autoSelectBestSkin(p);
+    setupHighQualityRender(p);
     setupZoomPan(p);
     $('combo-status').textContent = 'Loaded: ' + skelName + ' + ' + atlasName;
     $('combo-status').style.color = '#5dd';
@@ -1147,6 +1184,16 @@ function savePlayerImage() {
   var canvas = renderer.canvas;
   if (!canvas) return;
   try {
+    // Re-render the current frame on a transparent background so the
+    // exported PNG has alpha=0 where the skeleton isn't drawn.
+    var gl = renderer.context.gl;
+    var skeleton = curPlayer.skeleton;
+    var savedTime = (curPlayer.animationState.tracks[0] || {}).trackTime;
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    renderer.begin();
+    if (skeleton) renderer.drawSkeleton(skeleton, true);
+    renderer.end();
     var a = document.createElement('a');
     a.download = (CHARS[curIdx] ? CHARS[curIdx].name : 'spine') + '.png';
     a.href = canvas.toDataURL('image/png');
@@ -1212,6 +1259,12 @@ function captureAllFrames(fps, onProgress) {
         }
         var cam = renderer.camera;
         if (cam) cam.update();
+        // Clear to transparent black ourselves. The SpinePlayer main loop
+        // would normally clear with its dark backgroundColor, but during
+        // capture we want alpha=0 where the skeleton isn't drawn so PNG/GIF
+        // exports come out with a transparent background.
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
         renderer.begin();
         renderer.drawSkeleton(skeleton, true);
         renderer.end();
