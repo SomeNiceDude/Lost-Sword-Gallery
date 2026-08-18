@@ -49,12 +49,14 @@ h1 .ct { font-size:.75rem; font-weight:500; color:var(--text-dim); background:#1
 
 #stats { font-size:.78rem; color:var(--text-dim); margin-top:8px; padding-top:8px; border-top:1px solid var(--border); }
 
+
 /* --- Grid --- */
 #grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:var(--gap-grid); padding:18px 24px 24px; }
 
 /* --- Card --- */
 .card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; cursor:pointer; transition:transform .15s ease, border-color .15s, box-shadow .15s; position:relative; display:flex; flex-direction:column; }
 .card:hover { transform:translateY(-3px); border-color:var(--accent); box-shadow:var(--shadow-hover); }
+
 
 .cthumb { width:100%; aspect-ratio:1; background:linear-gradient(135deg,#0e0e15 0%,#16161e 100%); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; border-bottom:1px solid var(--border); }
 .cthumb img { max-width:90%; max-height:90%; object-fit:contain; image-rendering:pixelated; opacity:.95; transition:opacity .15s, transform .15s; }
@@ -72,6 +74,8 @@ h1 .ct { font-size:.75rem; font-weight:500; color:var(--text-dim); background:#1
 .b-v { background:rgba(232,67,147,.9); color:#fff; }
 
 .cplay { position:absolute; bottom:8px; left:8px; width:28px; height:28px; border-radius:50%; background:rgba(108,92,231,.92); display:flex; align-items:center; justify-content:center; font-size:.7rem; color:#fff; pointer-events:none; z-index:6; box-shadow:0 2px 8px rgba(0,0,0,.4); }
+
+
 
 .cinfo { padding:8px 10px 9px; flex:1; display:flex; flex-direction:column; gap:1px; min-height:62px; }
 .ccat { font-size:.62rem; color:var(--accent-hi); font-weight:700; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; opacity:.85; }
@@ -120,16 +124,8 @@ h1 .ct { font-size:.75rem; font-weight:500; color:var(--text-dim); background:#1
 .mf .fs { color:var(--text-dim); flex-shrink:0; }
 .mf .fd { color:var(--accent-hi); font-size:.7rem; margin-right:6px; flex-shrink:0; opacity:.8; }
 
-/* --- Player toolbar (above the canvas): skin selector + export buttons --- */
-#player-toolbar { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
-/* When the toolbar has no skin selector AND no action buttons, hide it so
-   the canvas isn't preceded by empty whitespace. */
-#player-toolbar:empty { display:none; }
-#player-actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-#player-actions:empty { display:none; }
-#skin-select-wrap:empty { display:none; }
-
-/* --- Buttons --- */
+/* --- Action buttons row --- */
+.macts { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; padding-top:12px; border-top:1px solid var(--border); align-items:center; }
 .btn { padding:8px 16px; border-radius:var(--radius-md); border:none; font-size:.82rem; font-weight:600; cursor:pointer; transition:all .15s; text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-family:inherit; }
 .btn:active { transform:scale(.97); }
 .btn-p { background:var(--accent); color:#fff; }
@@ -165,6 +161,12 @@ h1 .ct { font-size:.75rem; font-weight:500; color:var(--text-dim); background:#1
 #export-progress::-moz-progress-bar { background:var(--accent); border-radius:4px; }
 #export-status { font-size:.88rem; color:var(--text-mid); }
 
+/* --- Mobile zoom controls --- */
+#mobile-zoom-controls { position:absolute; bottom:60px; left:12px; display:flex; flex-direction:column; gap:6px; z-index:10; }
+#mobile-zoom-controls button { width:36px; height:36px; border-radius:50%; border:1px solid var(--border-strong); background:rgba(26,26,36,.85); color:var(--text); font-size:1.1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(8px); transition:all .15s; line-height:1; padding:0; }
+#mobile-zoom-controls button:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+#mobile-zoom-controls button:active { transform:scale(.9); }
+
 /* --- Scrollbar polish (WebKit) --- */
 ::-webkit-scrollbar { width:10px; height:10px; }
 ::-webkit-scrollbar-track { background:transparent; }
@@ -187,6 +189,7 @@ h1 .ct { font-size:.75rem; font-weight:500; color:var(--text-dim); background:#1
 <header>
   <div class="htop">
     <h1>Assets <span class="ct" id="tc"></span></h1>
+
   </div>
   <div class="ctrls">
     <input type="text" id="search" placeholder="Search characters..." autocomplete="off">
@@ -206,6 +209,7 @@ h1 .ct { font-size:.75rem; font-weight:500; color:var(--text-dim); background:#1
       <option value="size-desc">Largest</option>
       <option value="size-asc">Smallest</option>
     </select>
+
   </div>
   <div id="stats"></div>
 </header>
@@ -217,6 +221,8 @@ h1 .ct { font-size:.75rem; font-weight:500; color:var(--text-dim); background:#1
 <footer id="site-footer">
   <p>This is a fan project and not associated with Wemade Connect. Copyright for all Assets: &copy;2024. Wemade Connect Corp. CODECAT, Inc. All rights reserved.</p>
 </footer>
+
+
 
 <div id="mo" onclick="if(event.target===this)closeM()">
   <div id="md">
@@ -236,22 +242,26 @@ h1 .ct { font-size:.75rem; font-weight:500; color:var(--text-dim); background:#1
         <button class="tab" id="tab-files" onclick="switchTab('files')">Files</button>
       </div>
       <div id="pane-model">
-        <div id="player-toolbar">
-          <div id="skin-select-wrap">
-            <label for="skin-select">Skin:</label>
-            <select id="skin-select" onchange="onSkinChange()"></select>
-          </div>
-          <div id="player-actions"></div>
-        </div>
         <div id="player-wrap">
           <div id="player-container"></div>
-          <div class="zoom-hint">Scroll to zoom &middot; Drag to pan</div>
+          <div class="zoom-hint">Scroll/pinch to zoom &middot; Drag to pan</div>
+          <div id="mobile-zoom-controls">
+            <button onclick="mobileZoomIn()" title="Zoom In">+</button>
+            <button onclick="mobileZoomOut()" title="Zoom Out">&minus;</button>
+            <button onclick="mobileZoomReset()" title="Reset View">&circlearrowleft;</button>
+          </div>
           <div id="player-error"></div>
         </div>
+        <div id="skin-select-wrap">
+          <label for="skin-select">Skin:</label>
+          <select id="skin-select" onchange="onSkinChange()"></select>
+        </div>
+
       </div>
       <div id="pane-images" style="display:none;"></div>
       <div id="pane-media" style="display:none;"></div>
       <div id="pane-files" style="display:none;"><div class="mfiles" id="flist"></div></div>
+      <div class="macts" id="macts"></div>
     </div>
   </div>
 </div>
@@ -344,11 +354,12 @@ function render() {
   loading.style.display = 'none';
   var mediaCount = CHARS.filter(c => c.has_media).length;
   var nonMediaCount = CHARS.length - mediaCount;
+  var totalVisible = CHARS.length;
   /* When viewing the default 'Characters' filter, show how many non-media
      folders are hidden. For other filters, just show counts. */
-  var statsText = 'Showing ' + filtered.length + ' of ' + CHARS.length + ' (' + mediaCount + ' characters)';
+  var statsText = 'Showing ' + filtered.length + ' of ' + totalVisible + ' entries';
   if (curFilter === 'all' && nonMediaCount > 0) {
-    statsText += ' &middot; ' + nonMediaCount + ' non-media folder' + (nonMediaCount === 1 ? '' : 's') + ' hidden';
+    statsText += ' &middot; ' + nonMediaCount + ' non-media folder' + (nonMediaCount === 1 ? '' : 's') + ' filtered';
   }
   statsEl.innerHTML = statsText;
   $('tc').textContent = mediaCount + ' characters';
@@ -360,9 +371,9 @@ function render() {
     var card = document.createElement('div');
     card.className = 'card';
     var idx = CHARS.indexOf(c);
-    (function(card, idx) {
+    (function(card, c, idx) {
       card.onclick = function() { openM(idx); };
-    })(card, idx);
+    })(card, c, idx);
     var th;
     /* Always attempt to load thumb.png for playable characters OR characters
        flagged as having a thumb. The has_thumb flag is baked at build_gallery.py
@@ -460,6 +471,7 @@ function setupHighQualityRender(player) {
 }
 
 // --- Zoom & Pan via CSS transforms (safe: no camera/control interference) ---
+var zoomPanState = { scale: 1, tx: 0, ty: 0 };
 function setupZoomPan(player) {
   cleanupZoomPan();
   var renderer = player.sceneRenderer;
@@ -467,12 +479,14 @@ function setupZoomPan(player) {
   var canvas = renderer.canvas;
   var wrap = $('player-wrap');
   var scale = 1, tx = 0, ty = 0;
+  zoomPanState.scale = 1; zoomPanState.tx = 0; zoomPanState.ty = 0;
   var isPanning = false, lastX = 0, lastY = 0;
   canvas.style.cursor = 'grab';
 
   function apply() {
     canvas.style.transformOrigin = 'center center';
     canvas.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+    zoomPanState.scale = scale; zoomPanState.tx = tx; zoomPanState.ty = ty;
   }
   function onWheel(e) {
     if (e.target.closest('.spine-player-controls')) return;
@@ -492,7 +506,7 @@ function setupZoomPan(player) {
   }
   function onDown(e) {
     if (e.button !== 0) return;
-    if (e.target !== canvas) return;
+    if (e.target !== canvas && !e.target.closest('#player-wrap')) return;
     isPanning = true; lastX = e.clientX; lastY = e.clientY;
     canvas.style.cursor = 'grabbing';
     e.preventDefault();
@@ -504,22 +518,100 @@ function setupZoomPan(player) {
     apply();
   }
   function onUp() { if (isPanning) { isPanning = false; canvas.style.cursor = 'grab'; } }
-  function onDblClick(e) { if (e.target === canvas) { scale = 1; tx = 0; ty = 0; apply(); } }
+  function onDblClick(e) { if (e.target === canvas || e.target.closest('#player-wrap')) { scale = 1; tx = 0; ty = 0; apply(); } }
+
+  // --- Touch: one-finger pan, two-finger pinch-to-zoom ---
+  var lastTouches = [];
+  function onTouchStart(e) {
+    if (e.target.closest('.spine-player-controls')) return;
+    lastTouches = Array.from(e.touches);
+    if (e.touches.length === 1) {
+      e.preventDefault();
+    }
+  }
+  function onTouchMove(e) {
+    if (e.target.closest('.spine-player-controls')) return;
+    if (e.touches.length === 1 && lastTouches.length === 1) {
+      e.preventDefault();
+      var dx = e.touches[0].clientX - lastTouches[0].clientX;
+      var dy = e.touches[0].clientY - lastTouches[0].clientY;
+      tx += dx; ty += dy;
+      lastTouches = Array.from(e.touches);
+      apply();
+    } else if (e.touches.length === 2 && lastTouches.length === 2) {
+      e.preventDefault();
+      var prevDist = Math.hypot(lastTouches[0].clientX - lastTouches[1].clientX, lastTouches[0].clientY - lastTouches[1].clientY);
+      var currDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      if (prevDist > 0) {
+        var rect = canvas.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+        var mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - cx;
+        var my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - cy;
+        var oldScale = scale;
+        scale *= currDist / prevDist;
+        scale = Math.max(0.1, Math.min(10, scale));
+        tx = mx - (mx - tx) * (scale / oldScale);
+        ty = my - (my - ty) * (scale / oldScale);
+        lastTouches = Array.from(e.touches);
+        apply();
+      }
+    }
+  }
+  function onTouchEnd(e) {
+    lastTouches = Array.from(e.touches);
+  }
+
   wrap.addEventListener('wheel', onWheel, { passive: false });
   canvas.addEventListener('mousedown', onDown);
   document.addEventListener('mousemove', onMove);
   document.addEventListener('mouseup', onUp);
   canvas.addEventListener('dblclick', onDblClick);
+  wrap.addEventListener('touchstart', onTouchStart, { passive: false });
+  wrap.addEventListener('touchmove', onTouchMove, { passive: false });
+  wrap.addEventListener('touchend', onTouchEnd);
   zoomPanCleanup = function() {
     wrap.removeEventListener('wheel', onWheel);
     canvas.removeEventListener('mousedown', onDown);
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onUp);
     canvas.removeEventListener('dblclick', onDblClick);
+    wrap.removeEventListener('touchstart', onTouchStart);
+    wrap.removeEventListener('touchmove', onTouchMove);
+    wrap.removeEventListener('touchend', onTouchEnd);
     canvas.style.transform = '';
     canvas.style.transformOrigin = '';
     canvas.style.cursor = '';
   };
+}
+
+// --- Mobile zoom button helpers ---
+function mobileZoomIn() {
+  if (!curPlayer || !curPlayer.sceneRenderer) return;
+  var canvas = curPlayer.sceneRenderer.canvas;
+  var wrap = $('player-wrap');
+  if (!wrap) return;
+  var s = zoomPanState;
+  var oldScale = s.scale;
+  s.scale *= 1.25;
+  s.scale = Math.max(0.1, Math.min(10, s.scale));
+  canvas.style.transformOrigin = 'center center';
+  canvas.style.transform = 'translate(' + s.tx + 'px,' + s.ty + 'px) scale(' + s.scale + ')';
+}
+function mobileZoomOut() {
+  if (!curPlayer || !curPlayer.sceneRenderer) return;
+  var canvas = curPlayer.sceneRenderer.canvas;
+  var s = zoomPanState;
+  s.scale *= 0.8;
+  s.scale = Math.max(0.1, Math.min(10, s.scale));
+  canvas.style.transformOrigin = 'center center';
+  canvas.style.transform = 'translate(' + s.tx + 'px,' + s.ty + 'px) scale(' + s.scale + ')';
+}
+function mobileZoomReset() {
+  if (!curPlayer || !curPlayer.sceneRenderer) return;
+  var canvas = curPlayer.sceneRenderer.canvas;
+  zoomPanState.scale = 1; zoomPanState.tx = 0; zoomPanState.ty = 0;
+  canvas.style.transform = '';
+  canvas.style.transformOrigin = '';
 }
 
 function cleanupZoomPan() {
@@ -666,6 +758,7 @@ function loadSpineModel(c) {
   }
 
   var comboIdx = 0;
+
   function tryNextCombo(prevError) {
     if (comboIdx >= combos.length) {
       errEl.innerHTML = 'Failed to load: ' + (prevError || 'no valid skel+atlas combination found') +
@@ -1050,17 +1143,14 @@ function openM(idx) {
     return '<div class="mf"><span class="fn">' + f.name + '</span><span class="fs">' + fmtSize(f.size) + '</span></div>';
   }).join('');
 
-  /* Player toolbar (above the canvas): skin selector + Save PNG / PNG Sequence / Save GIF.
-     Only shown for playable characters. For non-playable characters the
-     toolbar divs stay empty (the wrap auto-hides when there's no skin or
-     actions to show). */
-  var pacts = '';
+  var acts = '';
   if (c.can_play) {
-    pacts += '<button class="btn btn-p" onclick="savePlayerImage()">Save PNG</button>';
-    pacts += '<button class="btn btn-p" onclick="exportPNGSequence()">PNG Sequence</button>';
-    pacts += '<button class="btn btn-p" onclick="exportGIF()">Save GIF</button>';
+    acts += '<button class="btn btn-p" onclick="savePlayerImage()">Save PNG</button>';
+    acts += '<button class="btn btn-p" onclick="exportPNGSequence()">PNG Sequence</button>';
+    acts += '<button class="btn btn-p" onclick="exportGIF()">Save GIF</button>';
   }
-  $('player-actions').innerHTML = pacts;
+
+  $('macts').innerHTML = acts;
 
   if (c.can_play) {
     switchTab('model');
